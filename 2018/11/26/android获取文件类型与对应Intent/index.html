@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="废话不多说直接上代码  ###1.编写各种文件类型和后缀名数组： 1234567891011121314151617181920212223242526272829303132333435363738	//文件类型	public static final int TYPE_FOLDER = 0;	public static final int TYPE_FILE = 1;	//public st">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android获取文件类型与对应Intent">
+<meta property="og:url" content="http://yoursite.com/2018/11/26/android获取文件类型与对应Intent/index.html">
+<meta property="og:site_name" content="ccxbd">
+<meta property="og:description" content="废话不多说直接上代码  ###1.编写各种文件类型和后缀名数组： 1234567891011121314151617181920212223242526272829303132333435363738	//文件类型	public static final int TYPE_FOLDER = 0;	public static final int TYPE_FILE = 1;	//public st">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-26T13:09:33.986Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android获取文件类型与对应Intent">
+<meta name="twitter:description" content="废话不多说直接上代码  ###1.编写各种文件类型和后缀名数组： 1234567891011121314151617181920212223242526272829303132333435363738	//文件类型	public static final int TYPE_FOLDER = 0;	public static final int TYPE_FILE = 1;	//public st">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/26/android获取文件类型与对应Intent/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>android获取文件类型与对应Intent | ccxbd</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ccxbd</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/26/android获取文件类型与对应Intent/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cc">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ccxbd">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">android获取文件类型与对应Intent
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-11-26 21:08:57" itemprop="dateCreated datePublished" datetime="2018-11-26T21:08:57+08:00">2018-11-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-26 21:09:33" itemprop="dateModified" datetime="2019-03-26T21:09:33+08:00">2019-03-26</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>废话不多说直接上代码</p>
+</blockquote>
+<p>###1.编写各种文件类型和后缀名数组：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">	//文件类型</span><br><span class="line">	public static final int TYPE_FOLDER = 0;</span><br><span class="line">	public static final int TYPE_FILE = 1;</span><br><span class="line">	//public static final int TYPE_PICTURE = 0;</span><br><span class="line">	public static final int TYPE_VIDEO = 2;</span><br><span class="line">	public static final int OPEN_FILE = 10;</span><br><span class="line">	public static final int TYPE_AUDIO = 13;</span><br><span class="line">	public static final int TYPE_PICTURE = 14;</span><br><span class="line">	public static final int TYPE_DOC = 21;</span><br><span class="line">	public static final int TYPE_XLS = 22;</span><br><span class="line">	public static final int TYPE_PPT = 23;</span><br><span class="line">	public static final int TYPE_PDF = 24;</span><br><span class="line">	public static final int TYPE_TXT = 25;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/** 视频格式 */</span><br><span class="line">	public static final String[] MIME_TYPE_VIDEO_ALL = &#123; &quot;.3gp&quot;, &quot;.3gpp&quot;, &quot;.divx&quot;,</span><br><span class="line">			&quot;.h264&quot;, &quot;.avi&quot;, &quot;.m2ts&quot;, &quot;.mkv&quot;, &quot;.mov&quot;, &quot;.mp2&quot;, &quot;.mp4&quot;, &quot;.mpg&quot;,</span><br><span class="line">			&quot;.mpeg&quot;, &quot;.wmv&quot;, &quot;.ts&quot;, &quot;.tp&quot; , &quot;.vob&quot;,</span><br><span class="line">			&quot;.flv&quot;, &quot;.vc1&quot;, &quot;.m4v&quot;, &quot;.f4v&quot;, &quot;.asf&quot;, &quot;.lst&quot;, &quot;.lsf&quot;, &quot;.lsx&quot;,</span><br><span class="line">			&quot;.mng&quot;, &quot;.asx&quot;, &quot;.wm&quot;, &quot;.wmx&quot;, &quot;.wvx&quot;, &quot;.movie&quot;, &quot;.3g2&quot;, &quot;.dl&quot;,</span><br><span class="line">			&quot;.dif&quot;, &quot;.dv&quot;, &quot;.fli&quot;, &quot;.qt&quot;, &quot;.mxu&quot;,&quot;.webm&quot;, &quot;mkv&quot;, &quot;rmvb&quot;&#125;;	</span><br><span class="line"></span><br><span class="line">	/** 音频格式 */</span><br><span class="line">	public static final String[] MIME_TYPE_MUSIC = &#123; &quot;.mp3&quot;, &quot;.wma&quot;, &quot;.m4a&quot;,</span><br><span class="line">		&quot;.aac&quot;, &quot;.ape&quot;, &quot;.ogg&quot;, &quot;.flac&quot;, &quot;.alac&quot;, &quot;.wav&quot;, &quot;.mid&quot;, &quot;.xmf&quot;,</span><br><span class="line">		&quot;.mka&quot;, &quot;.pcm&quot;, &quot;.adpcm&quot;, &quot;.snd&quot;, &quot;.midi&quot;, &quot;.kar&quot;, &quot;.mpga&quot;,</span><br><span class="line">		&quot;.mpega&quot;, &quot;.mp2&quot;, &quot;.m3u&quot;, &quot;.sid&quot;, &quot;.aif&quot;, &quot;.aiff&quot;, &quot;.aifc&quot;, &quot;.gsm&quot;,</span><br><span class="line">		&quot;.m3u&quot;, &quot;.wax&quot;, &quot;.ra&quot;, &quot;.ram&quot;, &quot;.pls&quot;, &quot;.sd2&quot;,&quot;amr&quot;,&quot;wv&quot;,&quot;mmf&quot;,&quot;m4r&quot;&#125;;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	/** 图片格式 */</span><br><span class="line">	public static final String[] MIME_TYPE_PHOTO = &#123; &quot;.jpg&quot;, &quot;.jpeg&quot;, &quot;.bmp&quot;,</span><br><span class="line">		&quot;.tif&quot;, &quot;.tiff&quot;, &quot;.png&quot;, &quot;.gif&quot;, &quot;.giff&quot;, &quot;.jfi&quot;, &quot;.jpe&quot;, &quot;.jif&quot;,</span><br><span class="line">		&quot;.jfif&quot;, &quot;.cur&quot;, &quot;.ico&quot;, &quot;.ief&quot;, &quot;.jpe&quot;, &quot;.pcx&quot;, &quot;.svg&quot;, &quot;.svgz&quot;,</span><br><span class="line">		&quot;.djvu&quot;, &quot;.djv&quot;, &quot;.wbmp&quot;, &quot;.ras&quot;, &quot;.cdr&quot;, &quot;.pat&quot;, &quot;.cdt&quot;, &quot;.cpt&quot;,</span><br><span class="line">		&quot;.art&quot;, &quot;.jng&quot;, &quot;.psd&quot;, &quot;.pnm&quot;, &quot;.pbm&quot;, &quot;.pgm&quot;, &quot;.ppm&quot;, &quot;.rgb&quot;,</span><br><span class="line">		&quot;.xbm&quot;, &quot;.xpm&quot;, &quot;.xwd&quot; &#125;;</span><br></pre></td></tr></table></figure>
+<p>###2.传人文件名返回文件类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">/** 文件类型 */</span><br><span class="line">	public static int getFileType(String filename)&#123;</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		if(filename.contains(&quot;.&quot;))&#123;</span><br><span class="line">			</span><br><span class="line">			</span><br><span class="line">			String type = filename.substring(filename.lastIndexOf(&quot;.&quot;));</span><br><span class="line">			</span><br><span class="line">			//Utils.MyLog(&quot;file: &quot; + name + &quot;   type: &quot; + type);</span><br><span class="line">			if(type.equalsIgnoreCase(&quot;.doc&quot;) || type.equalsIgnoreCase(&quot;.docx&quot;))&#123;</span><br><span class="line">				</span><br><span class="line">				return Utils.TYPE_DOC;</span><br><span class="line">				</span><br><span class="line">			&#125;else if(type.equalsIgnoreCase(&quot;.xls&quot;) || type.equalsIgnoreCase(&quot;.xlsx&quot;))&#123;</span><br><span class="line">				</span><br><span class="line">				return Utils.TYPE_XLS;</span><br><span class="line">				</span><br><span class="line">			&#125;else if(type.equalsIgnoreCase(&quot;.ppt&quot;) || type.equalsIgnoreCase(&quot;.pptx&quot;))&#123;</span><br><span class="line">				</span><br><span class="line">				return Utils.TYPE_PPT;</span><br><span class="line">				</span><br><span class="line">			&#125;else if(type.equalsIgnoreCase(&quot;.pdf&quot;))&#123;</span><br><span class="line">				</span><br><span class="line">				return Utils.TYPE_PDF;</span><br><span class="line">				</span><br><span class="line">			&#125;else if(type.equalsIgnoreCase(&quot;.txt&quot;))&#123;</span><br><span class="line">				</span><br><span class="line">				return Utils.TYPE_TXT;</span><br><span class="line">				</span><br><span class="line">			&#125;else&#123;</span><br><span class="line">				</span><br><span class="line">				for (String format : Utils.MIME_TYPE_PHOTO) &#123;</span><br><span class="line">					if (format.equalsIgnoreCase(type)) &#123;</span><br><span class="line">						return Utils.TYPE_PICTURE;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				</span><br><span class="line">				for (String format : Utils.MIME_TYPE_VIDEO_ALL) &#123;</span><br><span class="line">					if (format.equalsIgnoreCase(type)) &#123;</span><br><span class="line">						return Utils.TYPE_VIDEO;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				</span><br><span class="line">				for (String format : Utils.MIME_TYPE_MUSIC) &#123;</span><br><span class="line">					if (format.equalsIgnoreCase(type)) &#123;</span><br><span class="line">						return Utils.TYPE_AUDIO;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				</span><br><span class="line">			&#125;	</span><br><span class="line">			</span><br><span class="line">		&#125;else&#123;</span><br><span class="line">			</span><br><span class="line">			return Utils.TYPE_FILE;</span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		return Utils.TYPE_FILE;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>###3.不同类型文件的Intent</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br></pre></td><td class="code"><pre><span class="line">/**对应文件的Intent*/</span><br><span class="line">public static Intent getIntentByFileType(int type, String path)&#123;</span><br><span class="line">	switch(type)&#123;</span><br><span class="line">	case Utils.TYPE_AUDIO:</span><br><span class="line">		return getAudioFileIntent(path);</span><br><span class="line">		</span><br><span class="line">	case Utils.TYPE_PICTURE:</span><br><span class="line">		return getImageFileIntent(path);</span><br><span class="line">		</span><br><span class="line">	case Utils.TYPE_DOC:</span><br><span class="line">		return getWordFileIntent(path);</span><br><span class="line">				</span><br><span class="line">	case Utils.TYPE_XLS:</span><br><span class="line">		return getExcelFileIntent(path);</span><br><span class="line">		</span><br><span class="line">	case Utils.TYPE_PPT:</span><br><span class="line">		return getPptFileIntent(path);</span><br><span class="line">				</span><br><span class="line">	case Utils.TYPE_PDF:</span><br><span class="line">		return getPdfFileIntent(path);</span><br><span class="line">				</span><br><span class="line">	case Utils.TYPE_TXT:</span><br><span class="line">		return getTextFileIntent(path);</span><br><span class="line">				</span><br><span class="line">	default:</span><br><span class="line">		return null;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/** android获取一个用于打开HTML文件的intent */</span><br><span class="line">public static Intent getHtmlFileIntent(String param)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	Uri uri = Uri.parse(param).buildUpon()</span><br><span class="line">			.encodedAuthority(&quot;com.android.htmlfileprovider&quot;)</span><br><span class="line">			.scheme(&quot;content&quot;).encodedPath(param).build();</span><br><span class="line"></span><br><span class="line">	Intent intent = new Intent(&quot;android.intent.action.VIEW&quot;);</span><br><span class="line"></span><br><span class="line">	intent.setDataAndType(uri, &quot;text/html&quot;);</span><br><span class="line">	return intent;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/** android获取一个用于打开图片文件的intent */</span><br><span class="line">public static Intent getImageFileIntent(String param)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	Intent intent = new Intent(&quot;android.intent.action.VIEW&quot;);</span><br><span class="line"></span><br><span class="line">	intent.addCategory(&quot;android.intent.category.DEFAULT&quot;);</span><br><span class="line"></span><br><span class="line">	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line"></span><br><span class="line">	Uri uri = Uri.fromFile(new File(param));</span><br><span class="line"></span><br><span class="line">	intent.setDataAndType(uri, &quot;image/*&quot;);</span><br><span class="line"></span><br><span class="line">	return intent;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/** android获取一个用于打开PDF文件的intent */</span><br><span class="line">public static Intent getPdfFileIntent(String param)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	Intent intent = new Intent(&quot;android.intent.action.VIEW&quot;);</span><br><span class="line"></span><br><span class="line">	intent.addCategory(&quot;android.intent.category.DEFAULT&quot;);</span><br><span class="line"></span><br><span class="line">	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line"></span><br><span class="line">	Uri uri = Uri.fromFile(new File(param));</span><br><span class="line"></span><br><span class="line">	intent.setDataAndType(uri, &quot;application/pdf&quot;);</span><br><span class="line"></span><br><span class="line">	return intent;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/** android获取一个用于打开文本文件的intent */</span><br><span class="line">public static Intent getTextFileIntent(String param</span><br><span class="line">		//,boolean paramBoolean)</span><br><span class="line">		)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	Intent intent = new Intent(&quot;android.intent.action.VIEW&quot;);</span><br><span class="line"></span><br><span class="line">	intent.addCategory(&quot;android.intent.category.DEFAULT&quot;);</span><br><span class="line"></span><br><span class="line">	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line"></span><br><span class="line">		Uri uri1 = Uri.parse(param);</span><br><span class="line"></span><br><span class="line">		intent.setDataAndType(uri1, &quot;text/plain&quot;);</span><br><span class="line">	</span><br><span class="line">	return intent;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/** android获取一个用于打开音频文件的intent */</span><br><span class="line">public static Intent getAudioFileIntent(String param)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	Intent intent = new Intent(&quot;android.intent.action.VIEW&quot;);</span><br><span class="line"></span><br><span class="line">	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);</span><br><span class="line"></span><br><span class="line">	intent.putExtra(&quot;oneshot&quot;, 0);</span><br><span class="line"></span><br><span class="line">	intent.putExtra(&quot;configchange&quot;, 0);</span><br><span class="line"></span><br><span class="line">	Uri uri = Uri.fromFile(new File(param));</span><br><span class="line"></span><br><span class="line">	intent.setDataAndType(uri, &quot;audio/*&quot;);</span><br><span class="line"></span><br><span class="line">	return intent;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/** android获取一个用于打开视频文件的intent */</span><br><span class="line">public static Intent getVideoFileIntent(String param)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	Intent intent = new Intent(&quot;android.intent.action.VIEW&quot;);</span><br><span class="line"></span><br><span class="line">	intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);</span><br><span class="line"></span><br><span class="line">	intent.putExtra(&quot;oneshot&quot;, 0);</span><br><span class="line"></span><br><span class="line">	intent.putExtra(&quot;configchange&quot;, 0);</span><br><span class="line"></span><br><span class="line">	Uri uri = Uri.fromFile(new File(param));</span><br><span class="line"></span><br><span class="line">	intent.setDataAndType(uri, &quot;video/*&quot;);</span><br><span class="line"></span><br><span class="line">	return intent;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/** android获取一个用于打开CHM文件的intent */</span><br><span class="line">public static Intent getChmFileIntent(String param)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	Intent intent = new Intent(&quot;android.intent.action.VIEW&quot;);</span><br><span class="line"></span><br><span class="line">	intent.addCategory(&quot;android.intent.category.DEFAULT&quot;);</span><br><span class="line"></span><br><span class="line">	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line"></span><br><span class="line">	Uri uri = Uri.fromFile(new File(param));</span><br><span class="line"></span><br><span class="line">	intent.setDataAndType(uri, &quot;application/x-chm&quot;);</span><br><span class="line"></span><br><span class="line">	return intent;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/** android获取一个用于打开Word文件的intent */</span><br><span class="line">public static Intent getWordFileIntent(String param)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	Intent intent = new Intent(&quot;android.intent.action.VIEW&quot;);</span><br><span class="line"></span><br><span class="line">	intent.addCategory(&quot;android.intent.category.DEFAULT&quot;);</span><br><span class="line"></span><br><span class="line">	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line"></span><br><span class="line">	Uri uri = Uri.fromFile(new File(param));</span><br><span class="line"></span><br><span class="line">	intent.setDataAndType(uri, &quot;application/msword&quot;);</span><br><span class="line"></span><br><span class="line">	return intent;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/** android获取一个用于打开Excel文件的intent */</span><br><span class="line">public static Intent getExcelFileIntent(String param)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	Intent intent = new Intent(&quot;android.intent.action.VIEW&quot;);</span><br><span class="line"></span><br><span class="line">	intent.addCategory(&quot;android.intent.category.DEFAULT&quot;);</span><br><span class="line"></span><br><span class="line">	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line"></span><br><span class="line">	Uri uri = Uri.fromFile(new File(param));</span><br><span class="line"></span><br><span class="line">	intent.setDataAndType(uri, &quot;application/vnd.ms-excel&quot;);</span><br><span class="line"></span><br><span class="line">	return intent;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/** android获取一个用于打开PPT文件的intent */</span><br><span class="line">public static Intent getPptFileIntent(String param)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	Intent intent = new Intent(&quot;android.intent.action.VIEW&quot;);</span><br><span class="line"></span><br><span class="line">	intent.addCategory(&quot;android.intent.category.DEFAULT&quot;);</span><br><span class="line"></span><br><span class="line">	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line"></span><br><span class="line">	Uri uri = Uri.fromFile(new File(param));</span><br><span class="line"></span><br><span class="line">	intent.setDataAndType(uri, &quot;application/vnd.ms-powerpoint&quot;);</span><br><span class="line"></span><br><span class="line">	return intent;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/26/常用的liunx命令/" rel="next" title="常用的liunx命令">
+                <i class="fa fa-chevron-left"></i> 常用的liunx命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/20/hello-world/" rel="prev" title="Hello World">
+                Hello World <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cc</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cc</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
