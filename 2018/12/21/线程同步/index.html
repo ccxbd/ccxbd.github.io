@@ -104,20 +104,24 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="ccxbd">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="在多线程的应用中，两个或者两个以上的线程需要共享对同一个数据的存取。如果两个线程存取相同的对象，并且每一个线程都调用了修改该对象的方法，这种情况通常成为竞争条件。 竞争条件最容易理解的例子就是：比如火车卖票，火车票是一定的，但卖火车票的窗口到处都有，每个窗口就相当于一个线程，这么多的线程共用所有的火车票这个资源。并且无法保证其原子性，如果在一个时间点上，两个线程同时使用这个资源，那他们取出的火车票">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线程同步">
+<meta property="og:url" content="http://yoursite.com/2018/12/21/线程同步/index.html">
 <meta property="og:site_name" content="ccxbd">
+<meta property="og:description" content="在多线程的应用中，两个或者两个以上的线程需要共享对同一个数据的存取。如果两个线程存取相同的对象，并且每一个线程都调用了修改该对象的方法，这种情况通常成为竞争条件。 竞争条件最容易理解的例子就是：比如火车卖票，火车票是一定的，但卖火车票的窗口到处都有，每个窗口就相当于一个线程，这么多的线程共用所有的火车票这个资源。并且无法保证其原子性，如果在一个时间点上，两个线程同时使用这个资源，那他们取出的火车票">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-26T12:58:04.225Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ccxbd">
+<meta name="twitter:title" content="线程同步">
+<meta name="twitter:description" content="在多线程的应用中，两个或者两个以上的线程需要共享对同一个数据的存取。如果两个线程存取相同的对象，并且每一个线程都调用了修改该对象的方法，这种情况通常成为竞争条件。 竞争条件最容易理解的例子就是：比如火车卖票，火车票是一定的，但卖火车票的窗口到处都有，每个窗口就相当于一个线程，这么多的线程共用所有的火车票这个资源。并且无法保证其原子性，如果在一个时间点上，两个线程同时使用这个资源，那他们取出的火车票">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://yoursite.com/2018/12/21/线程同步/">
 
 
 
@@ -127,7 +131,7 @@
   };
 </script>
 
-  <title>ccxbd</title>
+  <title>线程同步 | ccxbd</title>
   
 
 
@@ -175,8 +179,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -213,7 +216,7 @@
         
         
           
-          <li class="menu-item menu-item-home menu-item-active">
+          <li class="menu-item menu-item-home">
 
     
     
@@ -275,9 +278,9 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -309,10 +312,8 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/21/线程同步/" class="post-title-link" itemprop="http://yoursite.com/index.html">线程同步</a>
+          <h1 class="post-title" itemprop="name headline">线程同步
+
               
             
           </h1>
@@ -387,9 +388,7 @@
       
 
       
-        
-          
-            <p>在多线程的应用中，两个或者两个以上的线程需要共享对同一个数据的存取。如果两个线程存取相同的对象，并且每一个线程都调用了修改该对象的方法，这种情况通常成为竞争条件。</p>
+        <p>在多线程的应用中，两个或者两个以上的线程需要共享对同一个数据的存取。如果两个线程存取相同的对象，并且每一个线程都调用了修改该对象的方法，这种情况通常成为竞争条件。</p>
 <p>竞争条件最容易理解的例子就是：比如火车卖票，火车票是一定的，但卖火车票的窗口到处都有，每个窗口就相当于一个线程，这么多的线程共用所有的火车票这个资源。并且无法保证其原子性，如果在一个时间点上，两个线程同时使用这个资源，那他们取出的火车票是一样的（座位号一样），这样就会给乘客造成麻烦。解决方法为，当一个线程要使用火车票这个资源时，我们就交给它一把锁，等它把事情做完后在把锁给另一个要用这个资源的线程。这样就不会出现上述情况。</p>
 <h3 id="1-锁对象"><a href="#1-锁对象" class="headerlink" title="1. 锁对象"></a>1. 锁对象</h3><p>synchronized关键字自动提供了锁以及相关的条件，大多数需要显式锁的情况使用synchronized非常的方便，但是等我们了解ReentrantLock类和条件对象时，我们能更好的理解synchronized关键字。ReentrantLock是JAVA SE 5.0引入的， 用ReentrantLock保护代码块的结构如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mLock.lock();</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">finally</span>&#123;</span><br><span class="line">mLock.unlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <blockquote>
@@ -401,8 +400,6 @@
 <p>使用synchronized关键字来编写代码要简洁很多，当然要理解这一代码，你必须要了解每一个对象有一个内部锁，并且该锁有一个内部条件。由锁来管理那些试图进入synchronized方法的线程，由条件来管理那些调用wait的线程。</p>
 <h3 id="3-同步阻塞"><a href="#3-同步阻塞" class="headerlink" title="3. 同步阻塞"></a>3. 同步阻塞</h3><p>上面我们说过，每一个Java对象都有一个锁，线程可以调用同步方法来获得锁，还有另一种机制可以获得锁，通过进入一个同步阻塞，当线程进入如下形式的阻塞：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">synchronized</span>(obj)&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
-          
-        
       
     </div>
 
@@ -425,158 +422,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/20/hello-world/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cc">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="ccxbd">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/20/hello-world/" class="post-title-link" itemprop="http://yoursite.com/index.html">Hello World</a>
-              
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
+              <a href="/2018/12/20/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
             
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-12-20 20:49:02" itemprop="dateCreated datePublished" datetime="2018-12-20T20:49:02+08:00">2018-12-20</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -586,14 +453,15 @@
   </article>
 
 
-    
-  </section>
-
-  
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -614,8 +482,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -659,6 +536,22 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-锁对象"><span class="nav-number">1.</span> <span class="nav-text">1. 锁对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Synchronized关键字"><span class="nav-number">2.</span> <span class="nav-text">2. Synchronized关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-同步阻塞"><span class="nav-number">3.</span> <span class="nav-text">3. 同步阻塞</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -787,6 +680,10 @@
   
 
   
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
 
   
 
