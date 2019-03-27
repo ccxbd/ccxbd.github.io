@@ -107,7 +107,7 @@
   <meta name="description" content="废话不多说直接上代码  ###1.编写各种文件类型和后缀名数组： 1234567891011121314151617181920212223242526272829303132333435363738	//文件类型	public static final int TYPE_FOLDER = 0;	public static final int TYPE_FILE = 1;	//public st">
 <meta property="og:type" content="article">
 <meta property="og:title" content="android获取文件类型与对应Intent">
-<meta property="og:url" content="http://yoursite.com/2018/11/26/android获取文件类型与对应Intent/index.html">
+<meta property="og:url" content="http://ccxbd.github.io/2018/11/26/android获取文件类型与对应Intent/index.html">
 <meta property="og:site_name" content="ccxbd">
 <meta property="og:description" content="废话不多说直接上代码  ###1.编写各种文件类型和后缀名数组： 1234567891011121314151617181920212223242526272829303132333435363738	//文件类型	public static final int TYPE_FOLDER = 0;	public static final int TYPE_FILE = 1;	//public st">
 <meta property="og:locale" content="zh-CN">
@@ -121,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/11/26/android获取文件类型与对应Intent/">
+  <link rel="canonical" href="http://ccxbd.github.io/2018/11/26/android获取文件类型与对应Intent/">
 
 
 
@@ -246,6 +246,23 @@
     <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-resume">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/resume/" rel="section"><i class="menu-item-icon fa fa-fw fa-file"></i> <br>resume</a>
+
+  </li>
 
       
       
@@ -295,11 +312,11 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/26/android获取文件类型与对应Intent/">
+    <link itemprop="mainEntityOfPage" href="http://ccxbd.github.io/2018/11/26/android获取文件类型与对应Intent/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cc">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="用一生的努力去奋斗出一个绝地反击的故事">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
@@ -473,7 +490,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">cc</p>
-              <p class="site-description motion-element" itemprop="description"></p>
+              <p class="site-description motion-element" itemprop="description">用一生的努力去奋斗出一个绝地反击的故事</p>
           </div>
 
           
@@ -705,6 +722,45 @@
   
 
   
+  
+
+  
+  
+
+  
+    <script src="//cdn.jsdelivr.net/npm/pdfobject@2.1.1/pdfobject.min.js"></script>
+    <script>
+    var options = {
+      pdfOpenParams: {
+        navpanes: 0,
+        toolbar: 0,
+        statusbar: 0,
+        pagemode: "thumbs",
+        view: "FitV"
+      },
+      PDFJS_URL: "/lib/pdf/web/viewer.html",
+      height: "600px"
+    };
+    $("#main a").each(function() {
+      var href = $(this).attr("href");
+      if (!href) return;
+      if (href.endsWith(".pdf") || href.endsWith(".pdf/")) {
+        var id = "pdf" + Math.floor(Math.random() * 10000);
+        $(this).after("<div id='" + id + "'></div>").remove();
+        PDFObject.embed(href, "#" + id, options);
+      }
+    });
+    </script>
+    <style>
+    .pdfobject-container {
+      position: relative;
+      overflow: auto;
+      width: 100%;
+      height: 600px;
+    }
+    </style>
+  
+
 
 </body>
 </html>
